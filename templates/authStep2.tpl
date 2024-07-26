@@ -42,15 +42,15 @@
 			</ul>
 		{/if}
 		<div {if empty($disableConnect) || $disableConnect != "1" }id="register-form"{/if} class="page_register">
-			<fieldset class="register">
-				<p class="cmp_notification warning">
-					{translate key="plugins.generic.openid.step2.help" journalName=$siteTitle|escape}
-				</p>
+			<p>
+				{translate key="plugins.generic.openid.step2.help" journalName=$siteTitle|escape}
+			</p>
+			<fieldset class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 				{if $returnTo == 'register'}
 					{include file="common/formErrors.tpl"}
 				{/if}
-				<div class="fields">
-					<div class="given_name">
+				<div class="sm:col-span-4">
+					<div class="block text-sm font-medium leading-6 text-gray-900">
 						<label>
 							<span class="label">
 								{translate key="user.givenName"}
@@ -62,7 +62,7 @@
 							<input type="text" name="givenName" id="givenName" value="{$givenName|escape}" maxlength="255" required aria-required="true">
 						</label>
 					</div>
-					<div class="family_name">
+					<div class="block text-sm font-medium leading-6 text-gray-900">
 						<label>
 							<span class="label">
 								{translate key="user.familyName"}
@@ -74,7 +74,7 @@
 							<input type="text" name="familyName" id="familyName" value="{$familyName|escape}" maxlength="255">
 						</label>
 					</div>
-					<div class="email">
+					<div class="block text-sm font-medium leading-6 text-gray-900">
 						<label>
 							<span class="label">
 								{translate key="user.email"}
@@ -86,7 +86,7 @@
 							<input type="email" name="email" id="email" value="{$email|escape}" maxlength="90" required aria-required="true">
 						</label>
 					</div>
-					<div class="username">
+					<div class="block text-sm font-medium leading-6 text-gray-900">
 						<label>
 							<span class="label">
 								{translate key="user.username"}
@@ -98,7 +98,7 @@
 							<input type="text" name="username" id="username" value="{$username|escape}" maxlength="32" required aria-required="true">
 						</label>
 					</div>
-					<div class="affiliation">
+					<div class="block text-sm font-medium leading-6 text-gray-900">
 						<label>
 							<span class="label">
 								{translate key="user.affiliation"}
@@ -110,7 +110,7 @@
 							<input type="text" name="affiliation" id="affiliation" value="{$affiliation|escape}" required aria-required="true">
 						</label>
 					</div>
-					<div class="country">
+					<div class="block text-sm font-medium leading-6 text-gray-900">
 						<label>
 							<span class="label">
 								{translate key="common.country"}
@@ -127,11 +127,11 @@
 					</div>
 				</div>
 			</fieldset>
-			<fieldset class="consent">
+			<fieldset class="mt-10 grid grid-cols-1 gap-y-2 sm:grid-cols-6">
 				{if isset($currentContext) and $currentContext->getData('privacyStatement')}
 					{* Require the user to agree to the terms of the privacy policy *}
-					<div class="fields">
-						<div class="optin optin-privacy">
+					<div class="sm:col-span-4">
+						<div class="block text-sm font-medium leading-6 text-gray-900">
 							<label>
 								<input type="checkbox" name="privacyConsent" value="1" required{if $privacyConsent} checked="checked"{/if}>
 								{capture assign="privacyUrl"}{url router=$smarty.const.ROUTE_PAGE page="about" op="privacy"}{/capture}
@@ -145,8 +145,8 @@
 					</div>
 				{/if}
 				{* Ask the user to opt into public email notifications *}
-				<div class="fields">
-					<div class="optin optin-email">
+				<div class="sm:col-span-4">
+					<div class="block text-sm font-medium leading-6 text-gray-900">
 						<label>
 							<input type="checkbox" name="emailConsent" id="emailConsent" value="1" {if $emailConsent} checked="checked"{/if}>
 							{translate key="user.register.form.emailConsent"}
@@ -201,7 +201,7 @@
 				</fieldset>
 			{/if}
 			<div class="buttons">
-				<button class="submit" type="submit" name="register">
+				<button class="rounded-md bg-sky-600 mx-3 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" type="submit" name="register">
 					{translate key="plugins.generic.openid.step2.complete.btn"}
 				</button>
 			</div>
