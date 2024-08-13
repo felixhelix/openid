@@ -88,7 +88,20 @@ class OpenIDHandler extends Handler
 					Validation::registerUserSession($user, $reason, true);
 
 					self::updateUserDetails($tokenPayload, $user, $request, $selectedProvider);
-					if ($user->hasRole(
+
+					// check if the user tried to access a specific page
+					// we needed to set the source as a session variable to work with openId providers 
+					$session = $request->getSession();
+					$source = $session->getSessionVar('source');
+					$session->unsetSessionVar('source', $source);
+					$sessionDao = DAORegistry::getDAO('SessionDAO');
+					$sessionDao->updateObject($session);					
+
+					if ($source != '') {
+						// The user tried to access a specific page before authentication: load that page
+						return $request->redirectUrl($source);
+					}
+					elseif ($user->hasRole(
 						[ROLE_ID_SITE_ADMIN, ROLE_ID_MANAGER, ROLE_ID_SUB_EDITOR, ROLE_ID_AUTHOR, ROLE_ID_REVIEWER, ROLE_ID_ASSISTANT],
 						$contextId
 					)) {
@@ -129,6 +142,12 @@ class OpenIDHandler extends Handler
 			$this->setupTemplate($request);
 			$templateMgr = TemplateManager::getManager($request);
 			$templateMgr->assign('pageTitle', 'user.login.registrationComplete');
+
+			// Register the jQuery script before the orcidProfile js is executed
+			$min = Config::getVar('general', 'enable_minified') ? '.min' : '';
+			$jqueryUrl = $request->getBaseUrl() . '/lib/pkp/lib/vendor/components/jquery/jquery' . $min . '.js';
+			$templateMgr->assign('jqueryUrl', $jqueryUrl);
+
 			$templateMgr->display('frontend/pages/userRegisterComplete.tpl');
 		} elseif (!$request->isPost()) {
 			$request->redirect($request->getRequestedContextPath(), 'login');
@@ -174,6 +193,7 @@ class OpenIDHandler extends Handler
 					$user->setOrcid($payload['id']);
 				}
 			}
+			
 			$userDao->updateObject($user);
 		}
 

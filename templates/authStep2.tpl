@@ -21,9 +21,9 @@
  * Display the OpenID Auth second step.
  *}
 {include file="frontend/components/header.tpl" pageTitle="plugins.generic.openid.step2.title"}
-<div class="page page_oauth">
+<div>
 	{include file="frontend/components/breadcrumbs.tpl" currentTitleKey="plugins.generic.openid.step2.title"}
-	<form class="cmp_form cmp_form oauth" id="oauth" method="post" action="{url page="openid" op="registerOrConnect"}">
+	<form id="oauth" method="post" action="{url page="openid" op="registerOrConnect"}">
 		{csrf}
 		<input type="hidden" name="oauthId" id="oauthId" value="{$oauthId}">
 		<input type="hidden" name="selectedProvider" id="selectedProvider" value="{$selectedProvider}">
@@ -40,7 +40,7 @@
 				<li><span id='showRegisterForm'
 				          class='step2-choice-links'>{translate key="plugins.generic.openid.step2.choice.no" journalName=$siteTitle|escape}</span></li>
 			</ul>
-		{/if}
+		{/if}		
 		<div {if empty($disableConnect) || $disableConnect != "1" }id="register-form"{/if} class="page_register">
 			<p>
 				{translate key="plugins.generic.openid.step2.help" journalName=$siteTitle|escape}
@@ -51,75 +51,75 @@
 				{/if}
 				<div class="sm:col-span-4">
 					<div class="block text-sm font-medium leading-6 text-gray-900">
-						<label>
-							<span class="label">
+						<label class="inline-grid grid-cols-3 gap-4">
+							<span>
 								{translate key="user.givenName"}
-								<span class="required" aria-hidden="true">*</span>
-								<span class="pkp_screen_reader">
+								<span aria-hidden="true">*</span>
+								<span class="sr-only">
 									{translate key="common.required"}
 								</span>
 							</span>
-							<input type="text" name="givenName" id="givenName" value="{$givenName|escape}" maxlength="255" required aria-required="true">
+							<input class="col-span-2" type="text" name="givenName" id="givenName" value="{$givenName|escape}" maxlength="255" required aria-required="true">
 						</label>
 					</div>
 					<div class="block text-sm font-medium leading-6 text-gray-900">
-						<label>
-							<span class="label">
+						<label class="inline-grid grid-cols-3 gap-4">
+							<span>
 								{translate key="user.familyName"}
 								<span class="required" aria-hidden="true">*</span>
-								<span class="pkp_screen_reader">
+								<span class="sr-only">
 									{translate key="common.required"}
 								</span>
 							</span>
-							<input type="text" name="familyName" id="familyName" value="{$familyName|escape}" maxlength="255">
+							<input class="col-span-2" type="text" name="familyName" id="familyName" value="{$familyName|escape}" maxlength="255">
 						</label>
 					</div>
 					<div class="block text-sm font-medium leading-6 text-gray-900">
-						<label>
-							<span class="label">
+						<label class="inline-grid grid-cols-3 gap-4">
+							<span>
 								{translate key="user.email"}
 								<span class="required" aria-hidden="true">*</span>
-								<span class="pkp_screen_reader">
+								<span class="sr-only">
 									{translate key="common.required"}
 								</span>
 							</span>
-							<input type="email" name="email" id="email" value="{$email|escape}" maxlength="90" required aria-required="true">
+							<input class="col-span-2" type="email" name="email" id="email" value="{$email|escape}" maxlength="90" required aria-required="true">
 						</label>
 					</div>
 					<div class="block text-sm font-medium leading-6 text-gray-900">
-						<label>
-							<span class="label">
+						<label class="inline-grid grid-cols-3 gap-4">
+							<span>
 								{translate key="user.username"}
 								<span class="required" aria-hidden="true">*</span>
-								<span class="pkp_screen_reader">
+								<span class="sr-only">
 									{translate key="common.required"}
 								</span>
 							</span>
-							<input type="text" name="username" id="username" value="{$username|escape}" maxlength="32" required aria-required="true">
+							<input class="col-span-2" type="text" name="username" id="username" value="{$username|escape}" maxlength="32" required aria-required="true">
 						</label>
 					</div>
 					<div class="block text-sm font-medium leading-6 text-gray-900">
-						<label>
-							<span class="label">
+						<label class="inline-grid grid-cols-3 gap-4">
+							<span>
 								{translate key="user.affiliation"}
 								<span class="required" aria-hidden="true">*</span>
-								<span class="pkp_screen_reader">
+								<span class="sr-only">
 									{translate key="common.required"}
 								</span>
 							</span>
-							<input type="text" name="affiliation" id="affiliation" value="{$affiliation|escape}" required aria-required="true">
+							<input class="col-span-2" type="text" name="affiliation" id="affiliation" value="{$affiliation|escape}" required aria-required="true">
 						</label>
 					</div>
 					<div class="block text-sm font-medium leading-6 text-gray-900">
-						<label>
-							<span class="label">
+						<label class="inline-grid grid-cols-3 gap-4">
+							<span>
 								{translate key="common.country"}
 								<span class="required" aria-hidden="true">*</span>
-								<span class="pkp_screen_reader">
+								<span class="sr-only">
 									{translate key="common.required"}
 								</span>
 							</span>
-							<select name="country" id="country" required aria-required="true">
+							<select class="col-span-2" name="country" id="country" required aria-required="true">
 								<option></option>
 								{html_options options=$countries selected=$country}
 							</select>
@@ -137,7 +137,7 @@
 								{capture assign="privacyUrl"}{url router=$smarty.const.ROUTE_PAGE page="about" op="privacy"}{/capture}
 								{translate key="user.register.form.privacyConsent" privacyUrl=$privacyUrl}
 								<span class="required" aria-hidden="true">*</span>
-								<span class="pkp_screen_reader">
+								<span class="sr-only">
 										{translate key="common.required"}
 									</span>
 							</label>
@@ -220,7 +220,7 @@
 						<span class="label">
 							{translate key="plugins.generic.openid.step2.connect.username"}
 							<span class="required" aria-hidden="true">*</span>
-							<span class="pkp_screen_reader">
+							<span class="sr-only">
 								{translate key="common.required"}
 							</span>
 						</span>
@@ -233,7 +233,7 @@
 						<span class="label">
 							{translate key="user.password"}
 							<span class="required" aria-hidden="true">*</span>
-							<span class="pkp_screen_reader">
+							<span class="sr-only">
 								{translate key="common.required"}
 							</span>
 						</span>
